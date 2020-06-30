@@ -1,4 +1,4 @@
-const mapboxgl = require("mapbox-gl");
+const { Marker } = require("mapbox-gl");
 
 const iconURLs = {
   hotels: "http://i.imgur.com/D9574Cu.png",
@@ -6,14 +6,16 @@ const iconURLs = {
   activities: "http://i.imgur.com/WbMOfMl.png",
 };
 
-const buildMarker = function (type, coords) {
-  // Your Code Here
-  const markerDomEl = document.createElement("div");
-  markerDomEl.style.width = "32px";
-  markerDomEl.style.height = "39px";
-  markerDomEl.style.backgroundImage = `url(${iconURLs[type]})`;
-  console.log(markerDomEl);
-  return new mapboxgl.Marker(markerDomEl).setLngLat(coords);
+const buildMarker = (type, coords) => {
+  if (!iconURLs.hasOwnProperty(type)) {
+    type = "activities";
+  }
+  const markerEl = document.createElement("div");
+  markerEl.style.backgroundSize = "contain";
+  markerEl.style.width = "32px";
+  markerEl.style.height = "37px";
+  markerEl.style.backgroundImage = `url(${iconURLs[type]})`;
+  return new Marker(markerEl).setLngLat(coords);
 };
 
 module.exports = buildMarker;
